@@ -119,5 +119,4 @@ exception
         
 end PLSQL_BLOCK;
 /
-
 --select count(TRID) from RES;
