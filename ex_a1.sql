@@ -78,7 +78,6 @@ begin
     
     
     declare 
-    
         cursor tab is select TRID from TRANSACTIONS;
         type lv_id is table of varchar(50);
         lvid lv_id;
@@ -95,8 +94,15 @@ begin
         --execute immediate ' insert into '||name_table_c||' select t1.TRID, t2.LID from '||name_table_a||' t1  join '||name_table_b||' t2 on t1.TRID=t2.TRID where t2.TRID = '||lvid(i)||'
     
     close tab;
+                                                                                                   
     dbms_output.put_line( ((dbms_utility.get_time-nt)/100) || ' seconds....' );
     end batch_processing;
-    
+
+exception
+    when others then 
+        DBMS_OUTPUT.PUT_LINE('# error: ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('mesg error: ' || SQLERRM);
+        raise;
+        
 end PLSQL_BLOCK;
 /
