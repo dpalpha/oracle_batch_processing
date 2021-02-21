@@ -47,3 +47,21 @@ from
 where rownum < 3000 
 order by 1,2,3; 
   
+
+/* second inserting to this table */
+insert into stock_market
+select f.CLOSE_DATE, aa.TRANSACTION_ID, a.STOCK_ID, b.SECTOR_ID, e.STOCK_NAME, d.CLOSE_PRICE, j.CLOSE_VOLUME
+from  
+(select TO_DATE(SYSDATE, 'DD/MM/YY HH24:MI:SS') + 
+       dbms_random.value(0, TO_DATE(SYSDATE, 'DD/MM/YY HH24:MI:SS') - 
+       TO_DATE(SYSDATE, 'DD/MM/YY HH24:MI:SS')+1) CLOSE_DATE from all_objects where rownum <= 15 ) f 
+,(select rownum TRANSACTION_ID from all_objects where rownum < 3000 ) aa
+,(select rownum STOCK_ID from all_objects where rownum < 30 ) a 
+,(select rownum SECTOR_ID from all_objects where rownum <= 4 ) b 
+,(select DBMS_RANDOM.STRING('A', 3) STOCK_NAME from all_objects where rownum <= 30 ) e 
+,(select cast(DBMS_RANDOM.VALUE(0, 3) as number(3,2)) CLOSE_PRICE from all_objects where rownum <= 1000 ) d 
+,(select cast(DBMS_RANDOM.VALUE(20,100) as number(5)) CLOSE_VOLUME from all_objects where rownum <= 1000 ) j
+where rownum < 3000 
+order by 1,2,3;
+
+  
